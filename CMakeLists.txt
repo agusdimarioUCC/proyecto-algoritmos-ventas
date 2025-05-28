@@ -3,5 +3,5 @@ project(proyecto_algoritmos_ventas)
 
 set(CMAKE_CXX_STANDARD 26)
 
-add_executable(proyecto_algoritmos_ventas main.cpp
+add_executable(proyecto_algoritmos_ventas
         Analisis_Ventas.cpp)

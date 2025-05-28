@@ -3,36 +3,54 @@ Crear un programa en C++ que procese el archivo CSV ventas_sudamerica.csv. Este
 archivo contiene registros de ventas realizadas por una empresa de logística. El
 programa deberá ofrecer, mediante un menú interactivo, funcionalidades que permitan
 consultar y analizar los datos de manera dinámica.
+
 Requerimientos del Cliente
+
 1. Eficiencia
 Se debe contabilizar el tiempo de ejecución y cantidad de condicionales (if) utilizados
 por cada proceso principal. Mostrar al usuario el nombre del proceso, el algoritmo y/o la
 estructura utilizada.
+
 2. Librerías
 Se permite el uso de las librerías propias de la empresa o cualquier librería estándar. Si
-se usan externas, deben ser explicadas y defendidas durante la presentaciòn.
+se usan externas, deben ser explicadas y defendidas durante la presentacion.
 3. Menú
 Debe guiar al usuario con texto contextual y mostrar resultados claros.
 Ejemplo (correcto):
 La ciudad con mayor monto total de ventas en Perú es Lima, con $35000.
+
+
 4. Carga de datos desde archivo CSV
 El archivo contiene las siguientes columnas:
 ID_Venta, Fecha, País, Ciudad, Cliente, Producto, Categoría, Cantidad, Precio_Unitario,
 Monto_Total, Medio_Envio, Estado_Envio
+
+
 5. Procesamiento de datos durante lectura del archivo CSV
-Durante la lectura deben calcularse los siguientes resultados principales: - El top 5 de ciudades con mayor monto de ventas por país. - Monto total vendido por producto, discriminado por país. - Promedio de ventas por categoría en cada país. - Medio de envío más utilizado por país - Medio de envío más utilizado por categoría. - Día con mayor cantidad de ventas (por monto de dinero) en toda la base de datos. - Estado de envío más frecuente por país. - Producto más vendido en cantidad total (no en dinero, sino en unidades). -  Producto menos vendido en cantidad total.
+Durante la lectura deben calcularse los siguientes resultados principales:
+ - El top 5 de ciudades con mayor monto de ventas por país.
+- Monto total vendido por producto, discriminado por país.
+- Promedio de ventas por categoría en cada país.
+ - Medio de envío más utilizado por país - Medio de envío más utilizado por categoría.
+- Día con mayor cantidad de ventas (por monto de dinero) en toda la base de datos.
+- Estado de envío más frecuente por país.
+ - Producto más vendido en cantidad total (no en dinero, sino en unidades).
+-  Producto menos vendido en cantidad total.
 6. Modificación de datos y reprocesamiento automático
 El programa debe permitir: - Agregar una venta (guiando al usuario paso a paso para ingresar todos los campos). - Eliminar una venta (El usuario ingresarà un pais o una ciudad y el programa filtrarà
 mostrando lo seleccionado). - Modificar una venta (selección por ID de venta; permitir modificar cualquier campo).
 Cada vez que se haga una modificación de datos (agregar, eliminar o modificar), se
 deben volver a procesar automáticamente los puntos del apartado 5.
+
 7. Consultas dinámicas solicitadas por el usuario - El listado de ventas realizadas en una ciudad específica. - El listado de ventas realizadas en un rango de fechas por país. - Comparación entre dos países:
 a. monto total de ventas
 b. productos más vendidos
-c. medio de envío más usado. - Comparación entre dos productos discriminado por todos los paises:
+c. medio de envío más usado.
+ - Comparación entre dos productos discriminado por todos los paises:
 a. cantidad total vendida
 b. monto total - Buscar productos vendidos en promedio por debajo de un monto total especificado por
-el usuario (umbral) y por paìs. */
+el usuario (umbral) y por país.
+*/
 
 #include <iostream>
 #include <fstream>
@@ -152,7 +170,7 @@ void procesarDatos()
     chrono::duration<double> duracion = fin - inicio;
 
     cout << "Procesamiento completado en " << duracion.count()
-         << " segundos con " << condicionales << " condicionales\n";
+         << " segundos con " << condicionales << " condicionales" << endl;
 }
 
 void mostrarMenu()
@@ -161,13 +179,13 @@ void mostrarMenu()
     do
     {
         system("cls");
-        cout << "=== MENU PRINCIPAL ===\n";
-        cout << "1. Top 5 ciudades por monto de ventas por pais\n";
-        cout << "2. Monto total por producto y pais\n";
-        cout << "3. Agregar nueva venta\n";
-        cout << "4. Eliminar venta\n";
-        cout << "5. Modificar venta\n";
-        cout << "6. Salir\n";
+        cout << "=== MENU PRINCIPAL ===" << endl;
+        cout << "1. Top 5 ciudades por monto de ventas por pais" << endl;
+        cout << "2. Monto total por producto y pais" << endl;
+        cout << "3. Agregar nueva venta" << endl;
+        cout << "4. Eliminar venta" << endl;
+        cout << "5. Modificar venta" << endl;
+        cout << "6. Salir" << endl;
         cout << "Seleccione una opcion: ";
         cin >> opcion;
 
@@ -215,10 +233,10 @@ void mostrarTop5Ciudades()
         auto fin = chrono::high_resolution_clock::now();
         chrono::duration<double> duracion = fin - inicio;
 
-        cout << "\nPais no encontrado!\n";
-        cout << "Tiempo de ejecución: " << duracion.count() << " s\n";
-        cout << "Condicionales usados: " << condicionales << "\n";
-        cout << "Algoritmo usado: Búsqueda en mapa (O(log n))\n";
+        cout << endl << "Pais no encontrado!" << endl;
+        cout << "Tiempo de ejecución: " << duracion.count() << " s" << endl;
+        cout << "Condicionales usados: " << condicionales << endl;
+        cout << "Algoritmo usado: Búsqueda en mapa (O(log n))" << endl;
         return;
     }
 
@@ -239,29 +257,29 @@ void mostrarTop5Ciudades()
     chrono::duration<double> duracion = fin - inicio;
 
     // Mostrar resultados
-    cout << "\n=== Resultados para " << pais << " ===\n";
-    cout << "Tiempo de procesamiento: " << duracion.count() << " s\n";
-    cout << "Condicionales usados: " << condicionales << "\n";
-    cout << "Algoritmo de ordenamiento: " << algoritmo << "\n\n";
+    cout << endl << "=== Resultados para " << pais << " ===" << endl;
+    cout << "Tiempo de procesamiento: " << duracion.count() << " s" << endl;
+    cout << "Condicionales usados: " << condicionales << endl;
+    cout << "Algoritmo de ordenamiento: " << algoritmo << endl << endl;
 
     int limite = min(5, static_cast<int>(ciudades.size()));
     if (limite == 0)
     {
-        cout << "No hay datos de ventas para ciudades en este país\n";
+        cout << "No hay datos de ventas para ciudades en este país" << endl;
         return;
     }
 
-    cout << "Top " << limite << " ciudades por ventas:\n";
+    cout << "Top " << limite << " ciudades por ventas:" << endl;
     for (int i = 0; i < limite; ++i)
     {
         cout << i + 1 << ". " << ciudades[i].first
-             << " - $" << fixed << setprecision(2) << ciudades[i].second << "\n";
+             << " - $" << fixed << setprecision(2) << ciudades[i].second << endl;
     }
 
     // Mensaje adicional con estilo del ejemplo
-    cout << "\nLa ciudad con mayor monto total en " << pais
+    cout << endl << "La ciudad con mayor monto total en " << pais
          << " es " << ciudades[0].first
-         << " con $" << fixed << setprecision(2) << ciudades[0].second << "\n";
+         << " con $" << fixed << setprecision(2) << ciudades[0].second << endl;
 }
 
 void agregarVenta()
@@ -308,11 +326,11 @@ void eliminarVenta()
     {
         ventasList.erase(it->second);
         ventasMap.erase(it);
-        cout << "Venta eliminada!\n";
+        cout << "Venta eliminada!" << endl;
     }
     else
     {
-        cout << "Venta no encontrada!\n";
+        cout << "Venta no encontrada!" << endl;
     }
 }
 
@@ -350,7 +368,7 @@ void modificarVenta()
 
         return;
     }
-    cout << "Venta no encontrada!\n";
+    cout << "Venta no encontrada!" << endl;
 }
 
 void mostrarMontoProductoPais()
@@ -373,10 +391,10 @@ void mostrarMontoProductoPais()
         auto fin = chrono::high_resolution_clock::now();
         chrono::duration<double> duracion = fin - inicio;
 
-        cout << "\nPaís no encontrado!\n";
-        cout << "Tiempo ejecución: " << duracion.count() << " s\n";
-        cout << "Condicionales usados: " << condicionales << "\n";
-        cout << "Algoritmo usado: Búsqueda en hash map (O(1) promedio)\n";
+        cout << endl << "País no encontrado!" << endl;
+        cout << "Tiempo ejecución: " << duracion.count() << " s" << endl;
+        cout << "Condicionales usados: " << condicionales << endl;
+        cout << "Algoritmo usado: Búsqueda en hash map (O(1) promedio)" << endl;
         return;
     }
 
@@ -400,21 +418,21 @@ void mostrarMontoProductoPais()
     chrono::duration<double> duracion = fin - inicio;
 
     // Mostrar resultados
-    cout << "\n=== Monto por producto en " << pais << " ===\n";
-    cout << "Tiempo procesamiento: " << duracion.count() << " s\n";
-    cout << "Condicionales usados: " << condicionales << "\n";
-    cout << "Algoritmos usados:\n- " << algoritmo << "\n- QuickSort (STL sort)\n\n";
+    cout << endl << "=== Monto por producto en " << pais << " ===" << endl;
+    cout << "Tiempo procesamiento: " << duracion.count() << " s" << endl;
+    cout << "Condicionales usados: " << condicionales << endl;
+    cout << "Algoritmos usados:" << endl << "- " << algoritmo << endl << "- QuickSort (STL sort)" << endl << endl;
 
     for (const auto &entrada : productos)
     {
         cout << "- " << entrada.first << ": $"
-             << fixed << setprecision(2) << entrada.second << "\n";
+             << fixed << setprecision(2) << entrada.second << endl;
     }
 
     if (!productos.empty())
     {
-        cout << "\nEl producto con mayor monto en " << pais << " es "
+        cout << endl << "El producto con mayor monto en " << pais << " es "
              << productos[0].first << " con $"
-             << fixed << setprecision(2) << productos[0].second << "\n";
+             << fixed << setprecision(2) << productos[0].second << endl;
     }
 }
