@@ -116,7 +116,7 @@ void Lista<T>::insertar(int pos, T dato) {
     Nodo<T> *aux = inicio;
     int posActual = 0;
 
-    auto *nuevo = new Nodo<T>(dato, inicio);
+    Nodo<T> *nuevo = new Nodo<T>(dato, inicio);
     nuevo->setDato(dato);
 
     if(pos == 0) {
@@ -181,7 +181,7 @@ void Lista<T>::insertarUltimo(T dato) {
  */
 template <class T>
 void Lista<T>::remover(int pos) {
-    Nodo<T> *aux = inicio;
+    Nodo<T> *aux = inicio, *aBorrar;
     int posActual = 0;
 
     if(pos == 0) {
@@ -199,7 +199,7 @@ void Lista<T>::remover(int pos) {
         throw 400;
     }
 
-    Nodo<T>* aBorrar = aux->getSiguiente();
+    aBorrar = aux->getSiguiente();
     aux->setSiguiente(aBorrar->getSiguiente());
 
     delete aBorrar;
@@ -257,10 +257,10 @@ void Lista<T>::reemplazar(int pos, T dato) {
  */
 template <class T>
 void Lista<T>::vaciar() {
-    Nodo<T> *aux = inicio;
+    Nodo<T> *aux = inicio, *aBorrar;
 
     while(aux != nullptr) {
-        Nodo<T>* aBorrar = aux;
+        aBorrar = aux;
         aux = aux->getSiguiente();
         delete aBorrar;
     }

@@ -2,10 +2,10 @@
 #define PROCESADORCSV_H
 
 #include <string>
-#include "Venta.h"
-#include "Lista.h"
 #include "HashMapList.h"
-
-void cargarCSV(const std::string& rutaArchivo, Lista<Venta>& ventas, HashMapList<std::string, Venta>& ventasPorPais);
+#include "Lista.h"
+#include "Venta.h"
+using namespace std;
+void cargarCSV(const string& rutaArchivo, Lista<Venta>& ventas, HashMapList<string, Venta>& ventasPorPais);
 
 #endif // PROCESADORCSV_H
