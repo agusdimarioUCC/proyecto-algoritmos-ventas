@@ -7,23 +7,31 @@ class HashEntry
 private:
     K clave;
     T valor;
+
 public:
-    HashEntry(K c, T v){
+    HashEntry(K c, T v)
+    {
         clave = c;
         valor = v;
     }
 
-    K getClave(){
+    K getClave()
+    {
         return clave;
     }
-    void setClave(K c){
+
+    void setClave(K c)
+    {
         clave = c;
     }
 
-    T getValor(){
+    T getValor()
+    {
         return valor;
     }
-    void setValor(T v){
+
+    void setValor(T v)
+    {
         valor = v;
     }
 };

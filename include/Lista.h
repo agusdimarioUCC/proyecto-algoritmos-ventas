@@ -2,7 +2,7 @@
 #define U02_LISTAS_LISTA_LISTA_H_
 
 #include <iostream>
-#include "Nodo.h"
+#include "nodo.h"
 
 /**
  * Clase que implementa una Lista Enlazada genérica, ya que puede
@@ -116,7 +116,7 @@ void Lista<T>::insertar(int pos, T dato) {
     Nodo<T> *aux = inicio;
     int posActual = 0;
 
-    Nodo<T> *nuevo = new Nodo<T>(dato, inicio);
+    auto *nuevo = new Nodo<T>(dato, inicio);
     nuevo->setDato(dato);
 
     if(pos == 0) {
@@ -181,7 +181,7 @@ void Lista<T>::insertarUltimo(T dato) {
  */
 template <class T>
 void Lista<T>::remover(int pos) {
-    Nodo<T> *aux = inicio, *aBorrar;
+    Nodo<T> *aux = inicio;
     int posActual = 0;
 
     if(pos == 0) {
@@ -199,7 +199,7 @@ void Lista<T>::remover(int pos) {
         throw 400;
     }
 
-    aBorrar = aux->getSiguiente();
+    Nodo<T>* aBorrar = aux->getSiguiente();
     aux->setSiguiente(aBorrar->getSiguiente());
 
     delete aBorrar;
@@ -257,10 +257,10 @@ void Lista<T>::reemplazar(int pos, T dato) {
  */
 template <class T>
 void Lista<T>::vaciar() {
-    Nodo<T> *aux = inicio, *aBorrar;
+    Nodo<T> *aux = inicio;
 
     while(aux != nullptr) {
-        aBorrar = aux;
+        Nodo<T>* aBorrar = aux;
         aux = aux->getSiguiente();
         delete aBorrar;
     }

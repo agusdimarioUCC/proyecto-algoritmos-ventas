@@ -4,9 +4,7 @@
 #include "HashMap.h"
 #include "HashMapList.h"
 #include "Lista.h"
-#include "ListaDoble.h"
 #include "Pila.h"
-#include "Cola.h"
 #include "Venta.h"
 
 // Definiciones de alias para facilitar el uso

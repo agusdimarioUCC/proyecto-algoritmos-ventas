@@ -8,7 +8,7 @@ template <class K, class T>
 class HashMap
 {
 private:
-    HashEntry<K, T> **tabla;
+    HashEntry<K, T>** tabla;
     unsigned int tamanio;
 
     static unsigned int hashFunc(K clave);
@@ -37,7 +37,7 @@ template <class K, class T>
 HashMap<K, T>::HashMap(unsigned int k)
 {
     tamanio = k;
-    tabla = new HashEntry<K, T> *[tamanio];
+    tabla = new HashEntry<K, T>*[tamanio];
     for (int i = 0; i < tamanio; i++)
     {
         tabla[i] = NULL;
@@ -49,7 +49,7 @@ template <class K, class T>
 HashMap<K, T>::HashMap(unsigned int k, unsigned int (*fp)(K))
 {
     tamanio = k;
-    tabla = new HashEntry<K, T> *[tamanio];
+    tabla = new HashEntry<K, T>*[tamanio];
     for (int i = 0; i < tamanio; i++)
     {
         tabla[i] = NULL;
@@ -77,9 +77,12 @@ T HashMap<K, T>::get(K clave)
     {
         throw 404;
     }
-    if(tabla[pos]->getClave() == clave){
+    if (tabla[pos]->getClave() == clave)
+    {
         return tabla[pos]->getValor();
-    }else{
+    }
+    else
+    {
         throw 409;
     }
 }
@@ -99,19 +102,24 @@ void HashMap<K, T>::put(K clave, T valor)
 }
 
 template <class K, class T>
-void HashMap<K, T>::remove(K clave) {
+void HashMap<K, T>::remove(K clave)
+{
     unsigned int pos = hashFuncP(clave) % tamanio;
 
-    if (tabla[pos] == NULL) {
+    if (tabla[pos] == NULL)
+    {
         throw 404; // No encontrado
     }
 
-    if (tabla[pos]->getClave() == clave) {
+    if (tabla[pos]->getClave() == clave)
+    {
         delete tabla[pos]; // Eliminar la entrada
-        tabla[pos] = NULL;  // Marcar la posición como vacía
-    } else {
+        tabla[pos] = NULL; // Marcar la posición como vacía
+    }
+    else
+    {
         throw 409; // Conflicto: la clave no coincide
-        }
+    }
 }
 
 template <class K, class T>
@@ -136,12 +144,11 @@ unsigned int HashMap<K, T>::hashFunc(K clave)
 template <class K, class T>
 void HashMap<K, T>::print()
 {
-
     std::cout << "i"
-              << " "
-              << "Clave"
-              << "\t\t"
-              << "Valor" << std::endl;
+        << " "
+        << "Clave"
+        << "\t\t"
+        << "Valor" << std::endl;
     std::cout << "--------------------" << std::endl;
     for (int i = 0; i < tamanio; i++)
     {
