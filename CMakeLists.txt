@@ -13,8 +13,5 @@ add_executable(proyecto_algoritmos_ventas
         include/HashEntry.h
         include/HashMapList.h
         include/Lista.h
-        include/Menu.h
         include/nodo.h
-        include/ProcesadorCSV.h
-        include/Venta.h
 )
