@@ -9,12 +9,4 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Add all source files
 add_executable(proyecto_algoritmos_ventas
-        src/main.cpp
-        include/HashEntry.h
-        include/HashMapList.h
-        include/Lista.h
-        include/Menu.h
-        include/nodo.h
-        include/ProcesadorCSV.h
-        include/Venta.h
-)
+        src/main.cpp)

@@ -1,30 +1,25 @@
 #ifndef NODO_H
 #define NODO_H
 
-template<class T>
+#include <memory>
+
+template <class T>
 class Nodo {
-private:
-    T dato;
-    Nodo<T> *siguiente;
-
 public:
-    Nodo(T d, Nodo<T> *s) : dato(d), siguiente(s) {}
+    explicit Nodo(const T& d, Nodo* s = nullptr) noexcept
+        : dato(d), siguiente(s) {}
 
-    T getDato() {
-        return dato;
-    }
+    // getters “const”, no copian el dato innecesariamente
+    const T& getDato()   const noexcept { return dato; }
+    Nodo*    getSig()    const noexcept { return siguiente; }
 
-    void setDato(T d) {
-        dato = d;
-    }
+    // setters
+    void setDato(const T& d)   noexcept { dato = d; }
+    void setSig(Nodo* s)       noexcept { siguiente = s; }
 
-    Nodo<T> *getSiguiente() {
-        return siguiente;
-    }
-
-    void setSiguiente(Nodo<T> *s) {
-        siguiente = s;
-    }
+private:
+    T     dato;
+    Nodo* siguiente;
 };
 
-#endif //NODO_H
+#endif  // NODO_H
