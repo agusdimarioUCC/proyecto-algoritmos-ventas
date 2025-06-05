@@ -3,137 +3,168 @@
 
 #include <functional>
 #include <vector>
+#include <iostream>
 #include "Lista.h"
 #include "HashEntry.h"
 
+/**
+ * Tabla hash (chaining con Lista).
+ * Mantiene interfaz original: put, get, remove, esVacio, print, getList.
+ */
 template <class K, class T,
-          class Hash = std::hash<K>>
-class HashMapList {
-   public:
-    explicit HashMapList(size_t cap = 16,
-                         float maxLoad = 0.75,
-                         const Hash& h = Hash())
-        : buckets(cap, nullptr),
-          capacity(cap),
-          loadMax(maxLoad),
-          hasher(h),
-          elemCount(0) {}
+		class Hash = std::hash<K>>
+class HashMapList
+{
+private:
+	using Bucket = Lista<HashEntry<K, T>>;
 
-    ~HashMapList() { clear(); }
+	std::vector<Bucket*> buckets;
+	size_t capacidad;
+	size_t elementos;
+	float factorCargaMax;
+	Hash hasher;
 
-    // ——— API ———
-    bool   empty()  const noexcept { return elemCount == 0; }
-    size_t size()   const noexcept { return elemCount; }
+	size_t indexFor(const K& clave) const noexcept
+	{
+		return hasher(clave) % capacidad;
+	}
 
-    void put(const K& key, const T& val);
-    bool remove(const K& key);
-    /** Devuelve puntero al valor o nullptr si no existe */
-    T*   get(const K& key);
-    /** Versión que lanza si no existe */
-    const T& at(const K& key) const;
+	void rehash(size_t nuevaCap);
 
-    void clear();
+public:
+	explicit HashMapList(size_t cap = 16,
+						float carga = 0.75,
+						const Hash& h = Hash())
+		: buckets(cap, nullptr),
+		capacidad(cap),
+		elementos(0),
+		factorCargaMax(carga),
+		hasher(h)
+	{
+	}
 
-    void print() const;
+	~HashMapList() { clear(); }
 
-   private:
-    using Bucket = Lista<HashEntry<K,T>>;
-
-    std::vector<Bucket*> buckets;
-    size_t  capacity;
-    float   loadMax;
-    Hash    hasher;
-    size_t  elemCount;
-
-    void rehash(size_t newCap);
-    size_t indexFor(const K& key) const noexcept {
-        return hasher(key) % capacity;
-    }
+	// ---- nombres originales ----
+	void put(K clave, T valor);
+	void remove(K clave);
+	T get(K clave); // lanza 404 si no existe
+	bool esVacio() const noexcept { return elementos == 0; }
+	void getList(K clave);
+	void print() const;
+	void clear();
 };
 
-// ----------- implementación -----------
+/*----------- implementación -----------*/
 
 template <class K, class T, class Hash>
-void HashMapList<K,T,Hash>::put(const K& key, const T& val) {
-    size_t idx = indexFor(key);
-    if (!buckets[idx]) buckets[idx] = new Bucket();
+void HashMapList<K, T, Hash>::put(K clave, T valor)
+{
+	size_t idx = indexFor(clave);
+	if (!buckets[idx]) buckets[idx] = new Bucket();
 
-    // buscar si ya existe
-    for (size_t i = 0; i < buckets[idx]->size(); ++i) {
-        if (buckets[idx]->at(i).key() == key) {
-            buckets[idx]->at(i).setValue(val);
-            return;   // actualizado
-        }
-    }
-    buckets[idx]->push_back(HashEntry<K,T>(key, val));
-    if (++elemCount > capacity * loadMax) rehash(capacity * 2);
+	// actualizar si ya existe
+	for (int i = 0; i < buckets[idx]->getTamanio(); ++i)
+	{
+		if (buckets[idx]->getDato(i).getClave() == clave)
+		{
+			buckets[idx]->getDato(i).setValor(std::move(valor));
+			return;
+		}
+	}
+	buckets[idx]->insertarUltimo(HashEntry<K, T>(std::move(clave), std::move(valor)));
+	if (++elementos > capacidad * factorCargaMax) rehash(capacidad * 2);
 }
 
 template <class K, class T, class Hash>
-bool HashMapList<K,T,Hash>::remove(const K& key) {
-    size_t idx = indexFor(key);
-    if (!buckets[idx]) return false;
-    for (size_t i = 0; i < buckets[idx]->size(); ++i) {
-        if (buckets[idx]->at(i).key() == key) {
-            buckets[idx]->erase(i);
-            --elemCount;
-            return true;
-        }
-    }
-    return false;
+void HashMapList<K, T, Hash>::remove(K clave)
+{
+	size_t idx = indexFor(clave);
+	if (!buckets[idx]) throw 404;
+
+	for (int i = 0; i < buckets[idx]->getTamanio(); ++i)
+	{
+		if (buckets[idx]->getDato(i).getClave() == clave)
+		{
+			buckets[idx]->remover(i);
+			--elementos;
+			return;
+		}
+	}
+	throw 404; // no estaba
 }
 
 template <class K, class T, class Hash>
-T* HashMapList<K,T,Hash>::get(const K& key) {
-    size_t idx = indexFor(key);
-    if (!buckets[idx]) return nullptr;
-    for (size_t i = 0; i < buckets[idx]->size(); ++i)
-        if (buckets[idx]->at(i).key() == key)
-            return &buckets[idx]->at(i).value();
-    return nullptr;
+T HashMapList<K, T, Hash>::get(K clave)
+{
+	size_t idx = indexFor(clave);
+	if (!buckets[idx]) throw 404;
+
+	for (int i = 0; i < buckets[idx]->getTamanio(); ++i)
+	{
+		if (buckets[idx]->getDato(i).getClave() == clave)
+			return buckets[idx]->getDato(i).getValor();
+	}
+	throw 404;
 }
 
 template <class K, class T, class Hash>
-const T& HashMapList<K,T,Hash>::at(const K& key) const {
-    auto* self = const_cast<HashMapList*>(this);
-    if (T* v = self->get(key)) return *v;
-    throw std::out_of_range("Key not found in HashMapList");
+void HashMapList<K, T, Hash>::getList(K clave)
+{
+	size_t idx = indexFor(clave);
+	if (!buckets[idx]) throw 404;
+	Nodo<HashEntry<K, T>>* aux = buckets[idx]->getInicio();
+	while (aux)
+	{
+		std::cout << aux->getDato().getValor() << '\n';
+		aux = aux->getSiguiente();
+	}
 }
 
 template <class K, class T, class Hash>
-void HashMapList<K,T,Hash>::clear() {
-    for (auto* b : buckets) { delete b; }
-    buckets.assign(capacity, nullptr);
-    elemCount = 0;
+void HashMapList<K, T, Hash>::print() const
+{
+	for (size_t i = 0; i < capacidad; ++i)
+	{
+		if (!buckets[i] || buckets[i]->esVacia()) continue;
+		std::cout << "[" << i << "] ";
+		Nodo<HashEntry<K, T>>* n = buckets[i]->getInicio();
+		while (n)
+		{
+			std::cout << "(" << n->getDato().getClave() << ", "
+				<< n->getDato().getValor() << ") ";
+			n = n->getSiguiente();
+		}
+		std::cout << '\n';
+	}
 }
 
 template <class K, class T, class Hash>
-void HashMapList<K,T,Hash>::print() const {
-    for (size_t i = 0; i < capacity; ++i) {
-        if (!buckets[i] || buckets[i]->vacia()) continue;
-        std::cout << "[" << i << "] ";
-        for (size_t j = 0; j < buckets[i]->size(); ++j) {
-            const auto& e = buckets[i]->at(j);
-            std::cout << "(" << e.key() << ", " << e.value() << ") ";
-        }
-        std::cout << "\n";
-    }
+void HashMapList<K, T, Hash>::clear()
+{
+	for (auto* b : buckets) delete b;
+	buckets.assign(capacidad, nullptr);
+	elementos = 0;
 }
 
 template <class K, class T, class Hash>
-void HashMapList<K,T,Hash>::rehash(size_t newCap) {
-    std::vector<Bucket*> old(std::move(buckets));
-    buckets.assign(newCap, nullptr);
-    capacity = newCap;
-    elemCount = 0;  // se recalculará
-
-    for (auto* b : old) {
-        if (!b) continue;
-        for (size_t i = 0; i < b->size(); ++i) {
-            put(b->at(i).key(), b->at(i).value());
-        }
-        delete b;
-    }
+void HashMapList<K, T, Hash>::rehash(size_t nuevaCap)
+{
+	std::vector<Bucket*> old(std::move(buckets));
+	buckets.assign(nuevaCap, nullptr);
+	capacidad = nuevaCap;
+	elementos = 0;
+	for (auto* b : old)
+	{
+		if (!b) continue;
+		Nodo<HashEntry<K, T>>* n = b->getInicio();
+		while (n)
+		{
+			put(n->getDato().getClave(), n->getDato().getValor());
+			n = n->getSiguiente();
+		}
+		delete b;
+	}
 }
 
 #endif  // HASHMAPLIST_H

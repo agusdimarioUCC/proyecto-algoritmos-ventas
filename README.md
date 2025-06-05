@@ -4,7 +4,9 @@
 
 ## Objetivo
 
-El alumno debe aplicar estructuras de datos y algoritmos aprendidos en la asignatura para desarrollar un sistema de análisis de ventas de una empresa de envíos que opera en Sudamérica. El sistema procesará datos a partir de un archivo CSV, permitiendo consultar, modificar y analizar ventas, priorizando la eficiencia y claridad del código.
+El alumno debe aplicar estructuras de datos y algoritmos aprendidos en la asignatura para desarrollar un sistema de
+análisis de ventas de una empresa de envíos que opera en Sudamérica. El sistema procesará datos a partir de un archivo
+CSV, permitiendo consultar, modificar y analizar ventas, priorizando la eficiencia y claridad del código.
 
 ---
 
@@ -19,7 +21,9 @@ El alumno debe aplicar estructuras de datos y algoritmos aprendidos en la asigna
 
 ## Enunciado General
 
-Crear un programa en C++ que procese el archivo CSV `ventas_sudamerica.csv`. Este archivo contiene registros de ventas realizadas por una empresa de logística. El programa deberá ofrecer, mediante un menú interactivo, funcionalidades que permitan consultar y analizar los datos de manera dinámica.
+Crear un programa en C++ que procese el archivo CSV `ventas_sudamerica.csv`. Este archivo contiene registros de ventas
+realizadas por una empresa de logística. El programa deberá ofrecer, mediante un menú interactivo, funcionalidades que
+permitan consultar y analizar los datos de manera dinámica.
 
 ---
 
@@ -69,7 +73,8 @@ El programa debe permitir:
 - **Eliminar una venta** (el usuario ingresará un país o una ciudad y el programa filtrará mostrando lo seleccionado).
 - **Modificar una venta** (selección por ID de venta; permitir modificar cualquier campo).
 
-Cada vez que se haga una modificación (agregar, eliminar o modificar), se deben volver a procesar automáticamente los puntos del apartado 5.
+Cada vez que se haga una modificación (agregar, eliminar o modificar), se deben volver a procesar automáticamente los
+puntos del apartado 5.
 
 ### 7. Consultas dinámicas solicitadas por el usuario
 
@@ -95,5 +100,6 @@ Cada vez que se haga una modificación (agregar, eliminar o modificar), se deben
 
 - Mostrar los resultados con claridad y texto explicativo.
 - Documentar el código y utilizar buenas prácticas.
-- La evaluación contempla: funcionamiento, eficiencia, documentación, defensa oral, código y comprensión de algoritmos y estructuras (ventajas y desventajas), incluso si no fueron utilizadas.
+- La evaluación contempla: funcionamiento, eficiencia, documentación, defensa oral, código y comprensión de algoritmos y
+  estructuras (ventajas y desventajas), incluso si no fueron utilizadas.
 
