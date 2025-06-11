@@ -16,7 +16,7 @@ void estadoEnvioMasFrecuentePorPais(HashMapList<int, Venta>& mapaVentas);
 void productoMasVendido(HashMapList<int, Venta>& mapaVentas);
 void productoMenosVendido(HashMapList<int, Venta>& mapaVentas);
 
-// Consultas específicas
+// Consultas especificas
 void ventasPorCiudad(HashMapList<int, Venta>& mapaVentas, const std::string& ciudad);
 void ventasPorRangoFechasYPais(HashMapList<int, Venta>& mapaVentas, const std::string& pais, 
                               const std::string& fechaInicio, const std::string& fechaFin);

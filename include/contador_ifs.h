@@ -6,7 +6,7 @@
 
 // Variable global para contar los IFs
 extern int contadorIfs;
-extern int contadorIfsProceso; // Para medir un proceso específico
+extern int contadorIfsProceso; // Para medir un proceso especifico
 
 // Funciones auxiliares
 inline void incrementarContadorIf() {
@@ -19,7 +19,7 @@ inline void iniciarConteoIfs() {
 }
 
 inline void mostrarEstadisticasProceso(const std::string& nombreProceso) {
-    std::cout << "\n--- Estadísticas: " << nombreProceso << " ---" << std::endl;
+    std::cout << "\n--- Estadisticas: " << nombreProceso << " ---" << std::endl;
     std::cout << "IFs ejecutados en este proceso: " << contadorIfsProceso << std::endl;
     std::cout << "Total de IFs del programa: " << contadorIfs << std::endl;
 }

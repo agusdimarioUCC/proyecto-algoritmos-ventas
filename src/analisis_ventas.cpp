@@ -6,7 +6,7 @@
 #include "lista.h"
 using namespace std;
 
-// 1. Top 5 ciudades con mayor monto de ventas por país
+// 1. Top 5 ciudades con mayor monto de ventas por pais
 void top5CiudadesPorPais(HashMapList<int, Venta>& mapaVentas) {
     HashMapList<string, HashMapList<string, double>> paisCiudadMontos;
     for (int i = 0; i < mapaVentas.getcapacidad(); ++i) {
@@ -60,7 +60,7 @@ void top5CiudadesPorPais(HashMapList<int, Venta>& mapaVentas) {
     }
 }
 
-// 2. Monto total vendido por producto, discriminado por país
+// 2. Monto total vendido por producto, discriminado por pais
 void montoPorProductoPorPais(HashMapList<int, Venta>& mapaVentas) {
     HashMapList<string, HashMapList<string, double>> paisProductoMontos;
     for (int i = 0; i < mapaVentas.getcapacidad(); ++i) {
@@ -103,7 +103,7 @@ void montoPorProductoPorPais(HashMapList<int, Venta>& mapaVentas) {
     }
 }
 
-// 3. Promedio de ventas por categoría en cada país
+// 3. Promedio de ventas por categoria en cada pais
 void promedioPorCategoriaPorPais(HashMapList<int, Venta>& mapaVentas) {
     HashMapList<string, HashMapList<string, double>> paisCategoriaMontos;
     HashMapList<string, HashMapList<string, int>> paisCategoriaCont;
@@ -159,7 +159,7 @@ void promedioPorCategoriaPorPais(HashMapList<int, Venta>& mapaVentas) {
     }
 }
 
-// 4. Medio de envío más utilizado por país
+// 4. Medio de envio más utilizado por pais
 void medioEnvioMasUsadoPorPais(HashMapList<int, Venta>& mapaVentas) {
     HashMapList<string, HashMapList<string, int>> paisMedioCont;
     for (int i = 0; i < mapaVentas.getcapacidad(); ++i) {
@@ -209,7 +209,7 @@ void medioEnvioMasUsadoPorPais(HashMapList<int, Venta>& mapaVentas) {
     }
 }
 
-// 5. Medio de envío más utilizado por categoría
+// 5. Medio de envio más utilizado por categoria
 void medioEnvioMasUsadoPorCategoria(HashMapList<int, Venta>& mapaVentas) {
     HashMapList<string, HashMapList<string, int>> catMedioCont;
     for (int i = 0; i < mapaVentas.getcapacidad(); ++i) {
@@ -259,7 +259,7 @@ void medioEnvioMasUsadoPorCategoria(HashMapList<int, Venta>& mapaVentas) {
     }
 }
 
-// 6. Día con mayor cantidad de ventas (por monto de dinero) en toda la base de datos
+// 6. Dia con mayor cantidad de ventas (por monto de dinero) en toda la base de datos
 void diaMayorMonto(HashMapList<int, Venta>& mapaVentas) {
     HashMapList<string, double> diaMonto;
     for (int i = 0; i < mapaVentas.getcapacidad(); ++i) {
@@ -294,7 +294,7 @@ void diaMayorMonto(HashMapList<int, Venta>& mapaVentas) {
     cout << "Dia con mayor monto de ventas: " << maxDia << " ($" << maxMonto << ")" << endl;
 }
 
-// 7. Estado de envío más frecuente por país
+// 7. Estado de envio más frecuente por pais
 void estadoEnvioMasFrecuentePorPais(HashMapList<int, Venta>& mapaVentas) {
     HashMapList<string, HashMapList<string, int>> paisEstadoCont;
     for (int i = 0; i < mapaVentas.getcapacidad(); ++i) {
@@ -414,7 +414,7 @@ void productoMenosVendido(HashMapList<int, Venta>& mapaVentas) {
     cout << "Producto menos vendido (en unidades): " << minProd << " (" << minCant << " unidades)" << endl;
 }
 
-// Listado de ventas realizadas en una ciudad específica
+// Listado de ventas realizadas en una ciudad especifica
 void ventasPorCiudad(HashMapList<int, Venta>& mapaVentas, const string& ciudad) {
     cout << "Ventas en la ciudad: " << ciudad << endl;
     for (int i = 0; i < mapaVentas.getcapacidad(); ++i) {

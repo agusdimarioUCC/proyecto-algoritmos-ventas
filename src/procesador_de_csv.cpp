@@ -12,9 +12,11 @@ using namespace std;
 extern vector<Venta> ventas;
 extern HashMapList<int, Venta> mapaVentas;
 
-void procesarArchivoCSV(const string& nombreArchivo) {
+void procesarArchivoCSV(const string& nombreArchivo)
+{
     ifstream archivo(nombreArchivo);
-    if (!archivo.is_open()) {
+    if (!archivo.is_open())
+    {
         cout << "Error al abrir el archivo: " << nombreArchivo << endl;
         return;
     }
@@ -27,7 +29,8 @@ void procesarArchivoCSV(const string& nombreArchivo) {
 
     ventas.clear(); // Limpiamos el vector antes de cargar nuevos datos
     size_t total = 0;
-    while (getline(archivo, linea)) {
+    while (getline(archivo, linea))
+    {
         stringstream stream(linea);
         string id, fecha, pais, ciudad, cliente, producto, categoria,
                cantidad, precioUnitario, montoTotal, medioEnvio, estadoEnvio;

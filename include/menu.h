@@ -5,7 +5,7 @@
 #include "hashMapList.h"
 #include "venta.h"
 
-// Funciones de menú
+// Funciones de menu
 void menuPrincipal(std::vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas);
 void menuAnalisis(HashMapList<int, Venta>& mapaVentas);
 
