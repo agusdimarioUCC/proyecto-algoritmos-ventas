@@ -1,26 +1,11 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include "lector_csv.h"
 #include "hashMapList.h"
-
+#include "venta.h"
+#include "procesador_de_csv.h"
 using namespace std;
 
-struct Venta
-{
-    int idVenta;
-    string fecha;
-    string pais;
-    string ciudad;
-    string cliente;
-    string producto;
-    string categoria;
-    int cantidad;
-    double precioUnitario;
-    double montoTotal;
-    string medioEnvio;
-    string estadoEnvio;
-};
 
 // HashMapList global:  clave = ID de venta, valor = struct Venta
 static HashMapList<int, Venta> mapaVentas;

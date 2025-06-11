@@ -40,9 +40,13 @@ public:
 		elementos(0),
 		factorCargaMax(carga),
 		hasher(h)
+
 	{
 	}
 
+	int getcapacidad() const { return capacidad; }
+	std::vector<Bucket*>& getBuckets() { return buckets; }
+	const std::vector<Bucket*>& getBuckets() const { return buckets; }
 	~HashMapList() { clear(); }
 
 	// ---- nombres originales ----
