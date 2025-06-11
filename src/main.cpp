@@ -1,14 +1,17 @@
-#include <vector>
 #include <iostream>
-#include "venta.h"
+#include <vector>
 #include "menu.h"
 #include "procesador_de_csv.h"
+#include "venta.h"
+#include "contador_ifs.h"
 
 using namespace std;
 
 // Variables globales
 vector<Venta> ventas;
 HashMapList<int, Venta> mapaVentas;
+ int contadorIfs = 0; // Definición de la variable global
+int contadorIfsProceso = 0; // Definición de la variable global
 
 int main() {
     // Cargar los datos desde el archivo CSV

@@ -3,6 +3,7 @@
 #include "menu.h"
 #include "analisis_ventas.h"
 #include "gestion_ventas.h"
+#include "contador_ifs.h"
 using namespace std;
 
 void menuAnalisis(HashMapList<int, Venta>& mapaVentas) {
@@ -26,24 +27,44 @@ void menuAnalisis(HashMapList<int, Venta>& mapaVentas) {
         cout << "Seleccione una opción: ";
         cin >> opcion;
 
+        iniciarConteoIfs(); // Iniciar conteo para cada análisis
+
         switch (opcion) {
-        case 1: top5CiudadesPorPais(mapaVentas);
+        case 1: 
+            top5CiudadesPorPais(mapaVentas);
+            mostrarEstadisticasProceso("Top 5 ciudades por país");
             break;
-        case 2: montoPorProductoPorPais(mapaVentas);
+        case 2: 
+            montoPorProductoPorPais(mapaVentas);
+            mostrarEstadisticasProceso("Monto por producto por país");
             break;
-        case 3: promedioPorCategoriaPorPais(mapaVentas);
+        case 3: 
+            promedioPorCategoriaPorPais(mapaVentas);
+            mostrarEstadisticasProceso("Promedio por categoría por país");
             break;
-        case 4: medioEnvioMasUsadoPorPais(mapaVentas);
+        case 4: 
+            medioEnvioMasUsadoPorPais(mapaVentas);
+            mostrarEstadisticasProceso("Medio de envío más usado por país");
             break;
-        case 5: medioEnvioMasUsadoPorCategoria(mapaVentas);
+        case 5: 
+            medioEnvioMasUsadoPorCategoria(mapaVentas);
+            mostrarEstadisticasProceso("Medio de envío más usado por categoría");
             break;
-        case 6: diaMayorMonto(mapaVentas);
+        case 6: 
+            diaMayorMonto(mapaVentas);
+            mostrarEstadisticasProceso("Día con mayor monto de ventas");
             break;
-        case 7: estadoEnvioMasFrecuentePorPais(mapaVentas);
+        case 7: 
+            estadoEnvioMasFrecuentePorPais(mapaVentas);
+            mostrarEstadisticasProceso("Estado de envío más frecuente por país");
             break;
-        case 8: productoMasVendido(mapaVentas);
+        case 8: 
+            productoMasVendido(mapaVentas);
+            mostrarEstadisticasProceso("Producto más vendido");
             break;
-        case 9: productoMenosVendido(mapaVentas);
+        case 9: 
+            productoMenosVendido(mapaVentas);
+            mostrarEstadisticasProceso("Producto menos vendido");
             break;
         case 10: {
                 string pais1, pais2;
@@ -53,6 +74,7 @@ void menuAnalisis(HashMapList<int, Venta>& mapaVentas) {
                 cout << "Ingrese el segundo país: ";
                 getline(cin, pais2);
                 compararPaises(mapaVentas, pais1, pais2);
+                mostrarEstadisticasProceso("Comparación de países");
             }
             break;
         case 11: {
@@ -63,6 +85,7 @@ void menuAnalisis(HashMapList<int, Venta>& mapaVentas) {
                 cout << "Ingrese el segundo producto: ";
                 getline(cin, prod2);
                 compararProductos(mapaVentas, prod1, prod2);
+                mostrarEstadisticasProceso("Comparación de productos");
             }
             break;
         case 12: {
@@ -74,6 +97,7 @@ void menuAnalisis(HashMapList<int, Venta>& mapaVentas) {
                 cout << "Ingrese el umbral de precio: ";
                 cin >> umbral;
                 productosPromedioPorDebajo(mapaVentas, pais, umbral);
+                mostrarEstadisticasProceso("Productos bajo umbral de precio");
             }
             break;
         case 13: {
@@ -81,11 +105,14 @@ void menuAnalisis(HashMapList<int, Venta>& mapaVentas) {
                 cout << "Ingrese el umbral de precio: ";
                 cin >> umbral;
                 productosPromedioPorEncima(mapaVentas, umbral);
+                mostrarEstadisticasProceso("Productos sobre umbral de precio");
             }
             break;
-        case 14: cout << "Volviendo al menú principal...\n";
+        case 14: 
+            cout << "Volviendo al menú principal...\n";
             break;
-        default: cout << "Opción inválida.\n";
+        default: 
+            cout << "Opción inválida.\n";
         }
     } while (opcion != 14);
 }

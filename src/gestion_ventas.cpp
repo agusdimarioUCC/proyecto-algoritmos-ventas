@@ -4,6 +4,7 @@
 #include "gestion_ventas.h"
 #include "venta.h"
 #include "hashMapList.h"
+#include "contador_ifs.h"
 using namespace std;
 
 void construirHash(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
@@ -15,6 +16,7 @@ void construirHash(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
 }
 
 void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
+    iniciarConteoIfs();
     Venta nueva;
     string entrada;
 
@@ -27,6 +29,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         do {
             cout << "Fecha (YYYY-MM-DD): ";
             getline(cin >> ws, nueva.fecha);
+            contadorIfs++; contadorIfsProceso++;
             if (!nueva.fecha.empty()) break;
             cout << "La fecha no puede estar vacía.\n";
         } while (nueva.fecha.empty());
@@ -34,6 +37,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         do {
             cout << "País: ";
             getline(cin >> ws, nueva.pais);
+            contadorIfs++; contadorIfsProceso++;
             if (!nueva.pais.empty()) break;
             cout << "El país no puede estar vacío.\n";
         } while (nueva.pais.empty());
@@ -41,6 +45,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         do {
             cout << "Ciudad: ";
             getline(cin >> ws, nueva.ciudad);
+            contadorIfs++; contadorIfsProceso++;
             if (!nueva.ciudad.empty()) break;
             cout << "La ciudad no puede estar vacía.\n";
         } while (nueva.ciudad.empty());
@@ -48,6 +53,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         do {
             cout << "Cliente: ";
             getline(cin >> ws, nueva.cliente);
+            contadorIfs++; contadorIfsProceso++;
             if (!nueva.cliente.empty()) break;
             cout << "El cliente no puede estar vacío.\n";
         } while (nueva.cliente.empty());
@@ -55,6 +61,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         do {
             cout << "Producto: ";
             getline(cin >> ws, nueva.producto);
+            contadorIfs++; contadorIfsProceso++;
             if (!nueva.producto.empty()) break;
             cout << "El producto no puede estar vacío.\n";
         } while (nueva.producto.empty());
@@ -62,6 +69,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         do {
             cout << "Categoría: ";
             getline(cin >> ws, nueva.categoria);
+            contadorIfs++; contadorIfsProceso++;
             if (!nueva.categoria.empty()) break;
             cout << "La categoría no puede estar vacía.\n";
         } while (nueva.categoria.empty());
@@ -72,6 +80,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
             getline(cin >> ws, entrada);
             try {
                 nueva.cantidad = stoi(entrada);
+                contadorIfs++; contadorIfsProceso++;
                 if (nueva.cantidad > 0) {
                     cantidadValida = true;
                 } else {
@@ -90,6 +99,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
             getline(cin >> ws, entrada);
             try {
                 nueva.precioUnitario = stof(entrada);
+                contadorIfs++; contadorIfsProceso++;
                 if (nueva.precioUnitario > 0) {
                     precioValido = true;
                 } else {
@@ -107,6 +117,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         do {
             cout << "Medio de Envío: ";
             getline(cin >> ws, nueva.medioEnvio);
+            contadorIfs++; contadorIfsProceso++;
             if (!nueva.medioEnvio.empty()) break;
             cout << "El medio de envío no puede estar vacío.\n";
         } while (nueva.medioEnvio.empty());
@@ -114,6 +125,7 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         do {
             cout << "Estado de Envío: ";
             getline(cin >> ws, nueva.estadoEnvio);
+            contadorIfs++; contadorIfsProceso++;
             if (!nueva.estadoEnvio.empty()) break;
             cout << "El estado de envío no puede estar vacío.\n";
         } while (nueva.estadoEnvio.empty());
@@ -123,17 +135,20 @@ void agregarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
 
         cout << "\n>> Venta agregada con éxito.\n";
         cout << ">> Procesando estadísticas nuevamente...\n";
+        mostrarEstadisticasProceso("Agregar venta");
     } catch (const exception& e) {
         cout << "Ocurrió un error inesperado al ingresar la venta: " << e.what() << "\n";
     }
 }
 
 void eliminarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
+    iniciarConteoIfs();
     string filtro;
 
     do {
         cout << "Ingrese el país o ciudad de la venta a eliminar: ";
         getline(cin >> ws, filtro);
+        contadorIfs++; contadorIfsProceso++;
         if (!filtro.empty()) break;
         cout << "El valor ingresado no puede estar vacío.\n";
     } while (filtro.empty());
@@ -143,6 +158,7 @@ void eliminarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
             return v.pais == filtro || v.ciudad == filtro;
         });
 
+        contadorIfs++; contadorIfsProceso++;
         if (it != ventas.end()) {
             ventas.erase(it, ventas.end());
             construirHash(ventas, mapaVentas);
@@ -151,12 +167,14 @@ void eliminarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
         } else {
             cout << "\nNo se encontraron ventas con ese país o ciudad.\n";
         }
+        mostrarEstadisticasProceso("Eliminar venta");
     } catch (const exception& e) {
         cerr << "\nOcurrió un error inesperado al intentar eliminar ventas: " << e.what() << endl;
     }
 }
 
 void modificarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) {
+    iniciarConteoIfs();
     int id;
 
     cout << "Ingrese el ID de la venta a modificar: ";
@@ -166,6 +184,7 @@ void modificarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) 
         return v.idVenta == id;
     });
 
+    contadorIfs++; contadorIfsProceso++;
     if (it != ventas.end()) {
         cout << "\n--- Modificando Venta ID: " << it->idVenta << " ---\n";
 
@@ -174,6 +193,7 @@ void modificarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) 
         do {
             cout << "Nuevo producto: ";
             getline(cin >> ws, it->producto);
+            contadorIfs++; contadorIfsProceso++;
             if (!it->producto.empty()) break;
             cout << "El producto no puede estar vacío.\n";
         } while (it->producto.empty());
@@ -184,6 +204,7 @@ void modificarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) 
             getline(cin >> ws, entrada);
             try {
                 it->cantidad = stoi(entrada);
+                contadorIfs++; contadorIfsProceso++;
                 if (it->cantidad > 0) {
                     cantidadValida = true;
                 } else {
@@ -202,6 +223,7 @@ void modificarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) 
             getline(cin >> ws, entrada);
             try {
                 it->precioUnitario = stof(entrada);
+                contadorIfs++; contadorIfsProceso++;
                 if (it->precioUnitario > 0) {
                     precioValido = true;
                 } else {
@@ -220,6 +242,7 @@ void modificarVenta(vector<Venta>& ventas, HashMapList<int, Venta>& mapaVentas) 
 
         cout << "\nVenta modificada con éxito.\n";
         cout << ">> Reprocesando estadísticas...\n";
+        mostrarEstadisticasProceso("Modificar venta");
     } else {
         cout << "\nNo se encontró una venta con ese ID.\n";
     }
