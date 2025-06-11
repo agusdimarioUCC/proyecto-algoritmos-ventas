@@ -1,20 +1,20 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <vector>
 #include "hashMapList.h"
 #include "venta.h"
 #include "procesador_de_csv.h"
+#include "gestion_ventas.h"
 using namespace std;
 
+// Declaración de las variables globales (definidas en main.cpp)
+extern vector<Venta> ventas;
+extern HashMapList<int, Venta> mapaVentas;
 
-// HashMapList global:  clave = ID de venta, valor = struct Venta
-static HashMapList<int, Venta> mapaVentas;
-
-void procesarArchivoCSV(const string& nombreArchivo)
-{
+void procesarArchivoCSV(const string& nombreArchivo) {
     ifstream archivo(nombreArchivo);
-    if (!archivo.is_open())
-    {
+    if (!archivo.is_open()) {
         cout << "Error al abrir el archivo: " << nombreArchivo << endl;
         return;
     }
@@ -25,9 +25,9 @@ void procesarArchivoCSV(const string& nombreArchivo)
     // Descartar el encabezado
     getline(archivo, linea);
 
+    ventas.clear(); // Limpiamos el vector antes de cargar nuevos datos
     size_t total = 0;
-    while (getline(archivo, linea))
-    {
+    while (getline(archivo, linea)) {
         stringstream stream(linea);
         string id, fecha, pais, ciudad, cliente, producto, categoria,
                cantidad, precioUnitario, montoTotal, medioEnvio, estadoEnvio;
@@ -59,10 +59,13 @@ void procesarArchivoCSV(const string& nombreArchivo)
         v.medioEnvio = medioEnvio;
         v.estadoEnvio = estadoEnvio;
 
-        mapaVentas.put(v.idVenta, std::move(v));
+        ventas.push_back(v);
         ++total;
     }
 
     archivo.close();
     cout << "Se cargaron " << total << " ventas en memoria." << endl;
+
+    // Construir el mapa hash después de cargar todas las ventas
+    construirHash(ventas, mapaVentas);
 }

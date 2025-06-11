@@ -10,4 +10,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # Add all source files
 add_executable(proyecto_algoritmos_ventas
         src/main.cpp
-        src/procesador_de_csv.cpp)
+        src/procesador_de_csv.cpp
+        src/menu.cpp
+        src/gestion_ventas.cpp
+        src/analisis_ventas.cpp)
