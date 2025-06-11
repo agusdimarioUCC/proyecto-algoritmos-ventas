@@ -1,7 +1,6 @@
 #include <algorithm>
 #include <iostream>
 #include <vector>
-#include <climits>
 #include "analisis_ventas.h"
 #include "estructuras_analisis.h"
 #include "lista.h"
