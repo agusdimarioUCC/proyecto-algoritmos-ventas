@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <limits>
 #include "menu.h"
 #include "analisis_ventas.h"
 #include "gestion_ventas.h"
